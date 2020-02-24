@@ -1,0 +1,29 @@
+import mysql.connector
+import sys
+
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  passwd="Rohit@1996#",
+  database="sakila"
+)
+
+
+
+def sql(mycursor, arraysize=1000):
+
+    while True:
+        results = mycursor.fetchmany(arraysize)
+        if not results:
+            break
+        for result in results:
+            yield result
+mycursor = mydb.cursor()
+mycursor.execute("select * from payment")
+
+
+for result in mycursor.fetchall():
+    print(result)
+
+print(sys.getsizeof(mycursor))
